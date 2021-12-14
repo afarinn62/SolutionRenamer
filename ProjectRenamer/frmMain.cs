@@ -20,26 +20,35 @@ namespace ProjectRename
 
         private async void btnSelectFolder_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(txtFrom.Text) || String.IsNullOrEmpty(txtTo.Text))
+            try
             {
-                MessageBox.Show("Please Set From and To Textes");
-            }
-            else
-            {
-                FolderBrowserDialog fd = new FolderBrowserDialog();
-                if (fd.ShowDialog() == DialogResult.OK)
+                if (String.IsNullOrEmpty(txtFrom.Text) || String.IsNullOrEmpty(txtTo.Text))
                 {
-                    string from = txtFrom.Text; 
-                    string to = txtTo.Text;
-                    string selectedFolder = fd.SelectedPath;
-                    string parent  = Directory.GetParent(selectedFolder).ToString();
-                    string newFolder = parent + $"\\New-For-{to}";
-                    await CreateDirectoryStructure(newFolder, selectedFolder, from, to);
+                    MessageBox.Show("Please Set From and To Textes");
+                }
+                else
+                {
+                    FolderBrowserDialog fd = new FolderBrowserDialog();
+                    if (fd.ShowDialog() == DialogResult.OK)
+                    {
+                        string from = txtFrom.Text;
+                        string to = txtTo.Text;
+                        string selectedFolder = fd.SelectedPath;
+                        string parent = Directory.GetParent(selectedFolder).ToString();
+                        string newFolder = parent + $"\\New-For-{to}";
+                        await CreateDirectoryStructure(newFolder, selectedFolder, from, to);
 
-                    await CopyAndReplace(newFolder, selectedFolder, from, to);
-                    MessageBox.Show("All Done.");
+                        await CopyAndReplace(newFolder, selectedFolder, from, to);
+                        MessageBox.Show("All Done.");
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("We have Error."+ Environment.NewLine + ex.Message);
+            }
+            
 
         }
 
