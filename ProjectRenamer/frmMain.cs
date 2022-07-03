@@ -143,10 +143,10 @@ namespace ProjectRename
 
                     await CopyAndReplace(newFolder, selectedFolder, from, to);
 
-                    var oldSolutionFile = newFolder + txtSolutionFrom + ".sln";
+                    var oldSolutionFile = newFolder +"\\"+txtSolutionFrom.Text + ".sln";
                     if (File.Exists(oldSolutionFile))
                     {
-                        System.IO.File.Move(oldSolutionFile, newFolder + txtSolutionTo+ ".sln");
+                        System.IO.File.Move(oldSolutionFile, newFolder + "\\" + txtSolutionTo.Text + ".sln");
                     }
 
                     MessageBox.Show(@"All Done.");
